@@ -1,4 +1,4 @@
-package net.fabricmc.example.mixin;
+package net.fabricmc.diorite.mixin;
 
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 

@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.diorite;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class DioriteConfig {
 	public HashMap<String, String> queryParams;
 
   private static String getConfigFileLocation() {
-		File root = new File(ExampleMod.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+		File root = new File(DioriteMod.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 		
 		return root.getParent() + "/diorite/config.yaml";
 	}
@@ -31,7 +31,7 @@ public class DioriteConfig {
 
 		// Create file
 		if (!file.exists()) {
-			Files.copy(ExampleMod.class.getClassLoader().getResourceAsStream("config.sample.yaml"), Paths.get(file.getAbsolutePath()));
+			Files.copy(DioriteMod.class.getClassLoader().getResourceAsStream("config.sample.yaml"), Paths.get(file.getAbsolutePath()));
 		}
 	}
 

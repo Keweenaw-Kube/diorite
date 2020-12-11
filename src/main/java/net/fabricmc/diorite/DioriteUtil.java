@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.diorite;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;

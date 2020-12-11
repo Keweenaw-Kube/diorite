@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.diorite;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,14 +16,14 @@ import net.minecraft.server.network.ServerLoginNetworkHandler;
 import net.minecraft.util.Util;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.example.mixin.ServerLoginNetworkHandlerAccessor;
+import net.fabricmc.diorite.mixin.ServerLoginNetworkHandlerAccessor;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
 
 import net.minecraft.text.LiteralText;
 
-public final class ExampleMod implements ModInitializer {
+public final class DioriteMod implements ModInitializer {
 	private DioriteConfig config;
 
 	@Override
