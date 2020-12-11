@@ -1,8 +1,7 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "kube-diorite",
   "version": "${version}",
-
   "name": "Diorite",
   "description": "an ultra-simple whitelist plugin that calls an external HTTP API",
   "authors": [
@@ -12,10 +11,7 @@
     "homepage": "https://kubemtu.com",
     "sources": "https://github.com/Keweenaw-Kube/diorite"
   },
-
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -25,7 +21,6 @@
   "mixins": [
     "modid.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": ">=0.28.0",
