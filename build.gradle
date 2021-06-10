@@ -11,10 +11,10 @@ archivesBaseName = project.archives_base_name
 version = gitVersion()
 group = project.maven_group
 
-configurations {
-	provided
-	compile.extendsFrom(provided)
-}
+//configurations {
+//	provided
+//	compile.extendsFrom(provided)
+//}
 
 dependencies {
 	// To change the versions see the gradle.properties file
@@ -23,8 +23,14 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// compile 'org.yaml:snakeyaml:1.27'
-	provided 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1'
+	modImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+	modImplementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1'
+
+	include 'com.fasterxml.jackson.core:jackson-annotations:2.11.1'
+	include 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+	include 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1'
+	include 'com.fasterxml.jackson.core:jackson-core:2.11.1'
+	include 'org.yaml:snakeyaml:1.29'
 }
 
 processResources {
@@ -57,11 +63,17 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
-
-	from {
-		configurations.provided.collect { it.isDirectory() ? it : zipTree(it) }
-	}
 }
+
+//jar {
+//	from("LICENSE") {
+//		rename { "${it}_${project.archivesBaseName}"}
+//	}
+//
+//	from {
+//		configurations.provided.collect { it.isDirectory() ? it : zipTree(it) }
+//	}
+//}
 
 // configure the maven publication
 publishing {
