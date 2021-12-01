@@ -6,14 +6,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.concurrent.FutureTask;
 import java.util.stream.Collectors;
 
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
-import net.minecraft.util.Util;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.diorite.mixin.ServerLoginNetworkHandlerAccessor;
@@ -48,33 +46,26 @@ public final class DioriteMod implements ModInitializer {
 
 		String playerUUID = profile.getId().toString();
 
-		FutureTask<?> future = new FutureTask<>(() -> {
-			// Decide here whether to allow connection or not by calling external HTTP API
-			try {
-				HashMap<String, String> queryParams = new HashMap<String, String>(this.config.queryParams);
+		// Decide here whether to allow connection or not by calling external HTTP API
+		try {
+			HashMap<String, String> queryParams = this.config.queryParams == null ? new HashMap<>() : new HashMap<String, String>(this.config.queryParams);
 
-				queryParams.put("uuid", playerUUID.replaceAll("-", ""));
+			queryParams.put("uuid", playerUUID.replaceAll("-", ""));
 
-				URL url = new URL(this.config.endpoint + '?' + DioriteUtil.getQueryParamsFrom(queryParams));
+			URL url = new URL(this.config.endpoint + '?' + DioriteUtil.getQueryParamsFrom(queryParams));
 
-				HttpURLConnection http = (HttpURLConnection) url.openConnection();
-				http.setConnectTimeout(1000);
-				int statusCode = http.getResponseCode();
+			HttpURLConnection http = (HttpURLConnection) url.openConnection();
+			http.setConnectTimeout(1000);
+			int statusCode = http.getResponseCode();
 
-				if (statusCode == 401) {
-					BufferedReader br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
-					String msg = br.lines().collect(Collectors.joining());
+			if (statusCode == 401) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
+				String msg = br.lines().collect(Collectors.joining());
 
-					networkHandler.disconnect(new LiteralText(msg));
-				}
-			} catch (IOException error) {
-				networkHandler.disconnect(new LiteralText("Whitelist API errored out."));
+				networkHandler.disconnect(new LiteralText(msg));
 			}
-
-			return null;
-		});
-
-		Util.getMainWorkerExecutor().execute(future);
-		synchronizer.waitFor(future);
+		} catch (IOException error) {
+			networkHandler.disconnect(new LiteralText("Whitelist API errored out."));
+		}
 	}
 }
