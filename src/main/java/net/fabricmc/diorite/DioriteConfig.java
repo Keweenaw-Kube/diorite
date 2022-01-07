@@ -12,6 +12,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 public class DioriteConfig {
 	public String endpoint;
 	public HashMap<String, String> queryParams;
+	public boolean callOnDisconnect = false;
 
   private static String getConfigFileLocation() {
 		File root = new File(DioriteMod.class.getProtectionDomain().getCodeSource().getLocation().getPath());

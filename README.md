@@ -12,13 +12,15 @@ If the API responds with 401, the player is blocked from joining and the body of
 
 Download a build from the [Releases page](https://github.com/Keweenaw-Kube/diorite/releases) and put it in the `mods/` directory.
 
-After running the server with it installed for the first time, a config file will be created at `mods/diorite/config.yaml`. Fill in `endpoint` with the URL you want Diorite to call. There's an additional, optional property:
+After running the server with it installed for the first time, a config file will be created at `mods/diorite/config.yaml`. Fill in `endpoint` with the URL you want Diorite to call. There's a few additional, optional properties:
 
 ```yml
 # Will make request https://example.com?uuid=player-id&token=my-auth-token
 endpoint: "https://example.com"
 queryParams:
   token: "my-auth-token"
+# If true, will make call on player disconnect like https://example.com?uuid=player-id&state=disconnected
+callOnDisconnect: false
 ```
 
 ### License
