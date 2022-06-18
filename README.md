@@ -23,6 +23,10 @@ queryParams:
 callOnDisconnect: false
 ```
 
+### Development
+
+To publish a new version on GitHub, create a new Git tag with the desired version number: `git tag v1.2.3`. Push the tag, and the GitHub workflow will automatically build and create a new release.
+
 ### License
 
 This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
