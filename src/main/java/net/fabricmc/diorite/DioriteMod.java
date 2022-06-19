@@ -28,7 +28,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
 
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 public final class DioriteMod implements ModInitializer {
 	private DioriteConfig config;
@@ -58,7 +58,7 @@ public final class DioriteMod implements ModInitializer {
 
 	private void onPreLogin(ServerLoginNetworkHandler networkHandler, MinecraftServer server, PacketSender sender, ServerLoginNetworking.LoginSynchronizer sync) {
 		GameProfile profile = ((ServerLoginNetworkHandlerAccessor) networkHandler).getProfile();
-		String playerUUID = PlayerEntity.getUuidFromProfile(profile).toString();
+		String playerUUID = profile.getId().toString();
 
 		sync.waitFor(CompletableFuture.runAsync(() -> onPreLoginAsync(networkHandler, playerUUID), this.scheduler));
 	}
@@ -76,10 +76,10 @@ public final class DioriteMod implements ModInitializer {
 				BufferedReader br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
 				String msg = br.lines().collect(Collectors.joining());
 
-				networkHandler.disconnect(new LiteralText(msg));
+				networkHandler.disconnect(Text.literal(msg));
 			}
 		} catch (IOException error) {
-			networkHandler.disconnect(new LiteralText("Whitelist API errored out."));
+			networkHandler.disconnect(Text.literal("Whitelist API errored out."));
 		}
 	}
 
@@ -100,7 +100,7 @@ public final class DioriteMod implements ModInitializer {
 					BufferedReader br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
 					String msg = br.lines().collect(Collectors.joining());
 
-					networkHandler.disconnect(new LiteralText(msg));
+					networkHandler.disconnect(Text.literal(msg));
 				}
 			} catch (IOException error) {
 				System.err.println("Whitelist API errored out.");
